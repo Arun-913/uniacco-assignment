@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  sqlite_db:
+    build:
+      context: .
+      dockerfile: Dockerfile.sqlite
+    container_name: sqlite_container
+    volumes:
+      - sqlite_data:/db
+    networks:
+      - app_network
+    command: ["sqlite3", "/db/initial-db.sqlite"]
+    working_dir: /db
+    restart: always
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: backend_container
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - sqlite_data:/db
+    networks:
+      - app_network
+    restart: always
+
+volumes:
+  sqlite_data:
+
+networks:
+  app_network:
+    driver: bridge

@@ -1,0 +1,24 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm install
+
+COPY prisma ./prisma
+COPY initial-db.sqlite ./initial-db.sqlite
+
+COPY . .
+
+ENV PORT=8000
+ENV DATABASE_URL="file:./initial-db.sqlite"
+ENV EMAIL=''
+ENV EMAIL_PASSWORD=''
+ENV JWT_SECRET="arun"
+
+# RUN npx prisma generate
+
+RUN npm run build
+
+# CMD ["npm run start"]
+CMD ["node", "dist/index.js"]
