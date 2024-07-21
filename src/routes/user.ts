@@ -51,7 +51,8 @@ userRouter.post('/register', async(req: Request, res: Response)=>{
                     email
                 },
                 data: {
-                    otp: hashedOtp
+                    otp: hashedOtp,
+                    createdAt: new Date()
                 }
             })
         }
