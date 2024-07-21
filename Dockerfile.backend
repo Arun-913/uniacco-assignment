@@ -16,7 +16,7 @@ ENV EMAIL=''
 ENV EMAIL_PASSWORD=''
 ENV JWT_SECRET="arun"
 
-# RUN npx prisma generate
+RUN npx prisma generate
 
 RUN npm run build
 

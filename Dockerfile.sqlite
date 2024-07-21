@@ -6,4 +6,4 @@ WORKDIR /db
 
 COPY initial-db.sqlite /db/
 
-CMD ["sqlite3", "/data/initial-db.sqlite"]
+CMD ["sh", "-c", "sqlite3 /db/initial-db.sqlite & tail -f /dev/null"]

@@ -10,7 +10,7 @@ services:
       - sqlite_data:/db
     networks:
       - app_network
-    command: ["sqlite3", "/db/initial-db.sqlite"]
+    command: ["sh", "-c", "sqlite3 /db/initial-db.sqlite & tail -f /dev/null"]
     working_dir: /db
     restart: always
 
@@ -29,6 +29,7 @@ services:
     networks:
       - app_network
     restart: always
+    command: ["sh", "-c", "npx prisma generate && node dist/index.js"]
 
 volumes:
   sqlite_data:
